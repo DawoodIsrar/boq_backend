@@ -8,7 +8,7 @@ const User = db.users
 passport.use(new GoogleStrategy({
     clientID:"1011974050434-ejchqjg4flp6hjgemmp8t0camf5taad3.apps.googleusercontent.com",
     clientSecret:"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",
-    callbackURL:"https://localhost:8000/google/callback"
+    callbackURL:"https://localhost:8080/google/callback"
 },function(accessToken,profile,done){
     console.log(accessToken)
     console.log(refreshToken)

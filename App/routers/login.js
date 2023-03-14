@@ -3,6 +3,8 @@ const router = express.Router()
 const db = require("../models");
 const bcrypt = require('bcrypt') 
 const users = db.users
+const config = require("../config/auth.config")
+const jsonwebtoken = require('jsonwebtoken')
  //LogIn
 const logIn = router.post("/logIn", async (req, res) => {
   users.findOne({

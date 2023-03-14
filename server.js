@@ -1,9 +1,51 @@
-const express = require('express');
+const express = require("express");
+const bodyParser = require("body-parser");
+const bcrypt = require("bcrypt");
+const cors = require("cors");
+const jsonwebtoken = require("jsonwebtoken");
 const app = express();
+const config = require("./App/config/auth.config")
+require('dotenv').config();
+const mailRouter = require('./App/routers/sendmail')
+const signUp = require('./App/routers/signup')
+const logIn = require('./App/routers/login')
+const material = require('./App/routers/materials')
+const secretKey = "cstAttendence";
+const googleAuth = require('./App/routers/oauth')
+
+
+// parse requests of content-type - application/json
+app.use(bodyParser.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// database
+const db = require("./App/models");
+//database connection
+db.sequelize.sync({ force: false }).then(() => {
+  console.log('database connected');
+  // initial()
+});
+//process.env.PORT || 
+const PORT = 8000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
+ app.get('/',(req,res)=>{
+  res.status(200).send("successfully login")
+ })
+const users = db.users
+app.use(mailRouter)
+app.use(signUp)
+app.use(logIn)
+app.use(googleAuth)
+app.use(material)
+//==========================================================
+//============(log in with google)==============================
 const session = require('express-session');
 
 app.set('view engine', 'ejs');
-
 app.use(session({
   resave: false,
   saveUninitialized: true,
@@ -14,7 +56,7 @@ app.get('/', function(req, res) {
   res.send('hello to google log in');
 });
 
-const port = process.env.PORT || 3000;
+const port =  8080;
 app.listen(port , () => console.log('App listening on port ' + port));
 const passport = require('passport');
 var userProfile;
@@ -40,7 +82,7 @@ const GOOGLE_CLIENT_SECRET = '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';
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: "http://localhost:8080/auth/google/callback"
   },
   function(accessToken, refreshToken, profile, done) {
       userProfile=profile;
@@ -61,4 +103,9 @@ app.get('/auth/google/callback',
     res.redirect('/');
   });
 
+ 
+
+ 
+      
+    
  
