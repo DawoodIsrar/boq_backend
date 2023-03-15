@@ -310,7 +310,7 @@ const material = router.post("/materials", async (req, res) => {
 
       //========================================================================================//
       //now lets calculate the material of room
-      if (req.body.rooms != 0 && req.body.avg_room_size != 0) {
+      if (req.body.rooms != 0 && req.body.avg_room_size != 0 || req.body.rooms != undefine && req.body.avg_room_size != undefine) {
         let oneRoomSize = req.body.avg_room_size;
         //assuming 36x80 inches which is 20 feet
         let roomDoor = 18;
@@ -320,12 +320,15 @@ const material = router.post("/materials", async (req, res) => {
 
          total_room_bricks = roomWall.bricks * req.body.rooms;
          total_room_cements = roomWall.cement_bags * req.body.rooms;
-         total_room_sand = roomWall.sand;
+         total_room_sand = roomWall.sand* req.body.rooms;
          roomsArea = oneRoomSize * req.body.rooms;
+         console.log("==========================================(rooms material)======================================")
         console.log(
           `area by all room:${roomsArea} bricks for room: ${total_room_bricks} and cement bags required:${total_room_cements}  and sand:${total_room_sand}`
         );
         console.log("====================================================================================================")
+      }else{
+         return res.status(500).json({message:"Sorry room no and size of must be mentioned."})
       }
       //=========================================================================================//
       //now lets calculate the material of bathrooms
@@ -334,7 +337,7 @@ const material = router.post("/materials", async (req, res) => {
         //now lets calculate the material of  washroom
         //by default ideal size is 5x6 which is 30 feet
         let oneWashroomSize;
-        if (req.body.attach_bath_size == null) {
+        if (req.body.attach_bath_size == null || req.body.attach_bath_size == undefine) {
           oneWashroomSize = 30;
         } else {
           oneWashroomSize = req.body.attach_bath_size;
@@ -353,12 +356,16 @@ const material = router.post("/materials", async (req, res) => {
          washroom_total_cements = washroomWall.cement_bags * req.body.rooms;
          washroom_sand = washroomWall.sand * req.body.rooms;
          washroomArea = oneWashroomSize * req.body.rooms;
+         console.log("=========================================(Washroom material)=======================================")
         console.log(
-          `area:${washroomArea}  and bricks for room: ${washroom_total_room_bricks} and cement bags required:${washroom_total_cements} and sand:${washroom_sand}`
+          `area:${washroomArea}  and bricks for washroom: ${washroom_total_room_bricks} and cement bags required:${washroom_total_cements} and sand:${washroom_sand}`
 
         );
         console.log("====================================================================================================")
-      }
+      }else{
+        console.log("attached bath are not included")
+       
+     }
       //=========================================================================================//
       //=========================================================================================//
       //now lets calculate the material of kitchen
@@ -380,18 +387,19 @@ const material = router.post("/materials", async (req, res) => {
         let kitchenWall = cal_wall(kitchenDoor, kitchen_size, kitchen_window);
 
          kitchen_total_room_bricks =
-          washroomWall.bricks * req.body.no_of_roofs;
+         kitchenWall.bricks * req.body.no_of_roofs;
          kitchen_total_room_cements =
           kitchenWall.cement_bags * req.body.no_of_roofs;
          kitchen_sand = kitchenWall.sand * req.body.no_of_roofs;
          kitchenArea = kitchen_size;
+         console.log("==========================================(Kitchens material)======================================")
         console.log(
-          `area:${kitchenArea}  bricks for room: ${kitchen_total_room_bricks} and cement bags required:${kitchen_total_room_cements} and sand:${kitchen_sand}`
+          `area:${kitchenArea}  bricks for kitchen: ${kitchen_total_room_bricks} and cement bags required:${kitchen_total_room_cements} and sand:${kitchen_sand}`
         );
         console.log("====================================================================================================")
       }
       //=========================================================================================//
-      let total_area_by_reserved = roomsArea - washroomArea - kitchenArea;
+      let total_area_by_reserved = roomsArea + washroomArea + kitchenArea;
       let total_area_remains_for_hall;
       if (total_area_by_reserved > req.body.area) {
         return res
@@ -414,7 +422,11 @@ const material = router.post("/materials", async (req, res) => {
          hall_bricks = hall_wall.bricks;
          hall_cement = hall_wall.cement_bags;
          hall_sand = hall_wall.sand;
-        console.log(hall_bricks, hall_cement, hall_sand);
+         console.log("==========================================(Hall material)======================================")
+         console.log(
+           `area:${total_area_remains_for_hall}  bricks for kitchen: ${hall_bricks} and cement bags required:${hall_cement} and sand:${hall_sand}`
+         );
+         console.log("====================================================================================================")
         let total_area_under_roof =
           roomsArea + washroomArea + kitchenArea + total_area_remains_for_hall;
        //=============================================================================//

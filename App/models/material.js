@@ -29,7 +29,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
     },
     attach_bath_size:{
         type: Sequelize.FLOAT,
-        allowNull:true,
+        allowNull: ,
       },
       kitchen:{
         type: Sequelize.BOOLEAN,
