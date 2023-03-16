@@ -17,14 +17,14 @@ const signUp = router.post("/signUp", async (req, res) => {
     let pass;
     if (exist == null && req.body.password == req.body.retypePassword) {
       try {
-        users.create({
+        await users.create({
           username: req.body.username,
           email: req.body.email,
           position: req.body.position,
           password: bcrypt.hashSync(req.body.password, 8),
           retypePassword: bcrypt.hashSync(req.body.retypePassword, 8),
         });
-        return res.status(200).send({ message: "user register successfully" });
+        return res.status(201).send({ message: "user register successfully" });
       } catch (error) {
         console.log(error.message);
         return res.status(500).send({ message: error.message });

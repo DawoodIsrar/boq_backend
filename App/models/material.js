@@ -2,16 +2,12 @@ const express = require("express");
 const { Sequelize, DataTypes, QueryTypes } = require("sequelize");
 module.exports = (sequelize, Sequelize, DataTypes) => {
   const materials = sequelize.define("materials", {
-     project_name:{
-      type:DataTypes.STRING,
-      allowNull:false
-     },
-    area: {
-      type: DataTypes.FLOAT,
-      allowNull: false
-    },
-    no_of_roofs: {
+    roof_no: {
       type: DataTypes.INTEGER,
+      allowNull:false
+    },
+    area:{
+      type:DataTypes.FLOAT,
       allowNull:false
     },
     rooms: {
@@ -19,50 +15,51 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
       allowNull:false
     },
     avg_room_size: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull:false,
       
     },
     attach_bath:{
-      type: Sequelize.BOOLEAN,
-      allowNull:true,
+      type: DataTypes.BOOLEAN,
+      allowNull:false,
     },
     attach_bath_size:{
-        type: Sequelize.FLOAT,
-        allowNull: ,
+        type: DataTypes.FLOAT,
+        allowNull: false,
       },
       kitchen:{
-        type: Sequelize.BOOLEAN,
-        allowNull:true,
+        type: DataTypes.BOOLEAN,
+        allowNull:false,
       },
       kitchen_size:{
-          type: Sequelize.FLOAT,
+          type: DataTypes.FLOAT,
           allowNull:true,
         },
       total_bricks:{
-        type: Sequelize.FLOAT,
-        allowNull:true,
+        type: DataTypes.FLOAT,
+        allowNull:false,
       },
       total_cement:{
-        type: Sequelize.FLOAT,
-        allowNull:true,
+        type: DataTypes.FLOAT,
+        allowNull:false,
       },
       total_beams_pillars:{
-        type: Sequelize.FLOAT,
-        allowNull:true,
+        type: DataTypes.FLOAT,
+        allowNull:false,
       },
       total_steel:{
-        type: Sequelize.FLOAT,
-        allowNull:true,
+        type: DataTypes.FLOAT,
+        allowNull:false,
       },
       total_sand:{
-        type: Sequelize.FLOAT,
-        allowNull:true,
+        type: DataTypes.FLOAT,
+        allowNull:false,
       },
       total_concrete:{
-        type: Sequelize.FLOAT,
-        allowNull:true,
-      },
+        type: DataTypes.FLOAT,
+        allowNull:false,
+      }
+      
   },
     {
       createdAt: false,

@@ -1,13 +1,15 @@
 const express = require("express");
 const db = require("../models");
-
+const users = db.users;
+const projects = db.projects;
+const materials = db.material
 const router = express.Router();
 const material = router.post("/materials", async (req, res) => {
-  //    const exist= material.findOne({
-  //         where:{
-  //             project_name:req.body.project_name
-  //         }
-  //     })
+     const exist= projects.findOne({
+          where:{
+              name:req.body.name
+          }
+      })
   try {
   
       //=======================(Step-1)============================//
@@ -310,7 +312,7 @@ const material = router.post("/materials", async (req, res) => {
 
       //========================================================================================//
       //now lets calculate the material of room
-      if (req.body.rooms != 0 && req.body.avg_room_size != 0 || req.body.rooms != undefine && req.body.avg_room_size != undefine) {
+      if (req.body.rooms != 0 && req.body.avg_room_size != 0 || req.body.rooms != null && req.body.avg_room_size != null) {
         let oneRoomSize = req.body.avg_room_size;
         //assuming 36x80 inches which is 20 feet
         let roomDoor = 18;
@@ -337,8 +339,8 @@ const material = router.post("/materials", async (req, res) => {
         //now lets calculate the material of  washroom
         //by default ideal size is 5x6 which is 30 feet
         let oneWashroomSize;
-        if (req.body.attach_bath_size == null || req.body.attach_bath_size == undefine) {
-          oneWashroomSize = 30;
+        if (req.body.attach_bath_size == null || req.body.attach_bath_size == 0) {
+          oneWashroomSize = bathroom_size;
         } else {
           oneWashroomSize = req.body.attach_bath_size;
         }
@@ -399,24 +401,25 @@ const material = router.post("/materials", async (req, res) => {
         console.log("====================================================================================================")
       }
       //=========================================================================================//
-      let total_area_by_reserved = roomsArea + washroomArea + kitchenArea;
+      let total_area_by_reserved = roomsArea + washroomArea + kitchenArea+hall_size;
       let total_area_remains_for_hall;
       if (total_area_by_reserved > req.body.area) {
         return res
           .status(500)
           .json({
             message:
-              "sorry you have enter incorrect total area the parameter that you have require exceed the total area",
+              "sorry you have enter incorrect total area the parameter that you have require exceed the total area limits ",
           });
       } 
         total_area_remains_for_hall = req.body.area - total_area_by_reserved;
+        let remaining_area = total_area_remains_for_hall-hall_size
         //assuming main door 30x80 =>2400 inches => approx 17 sq feet
         let hall_door = 17;
         //assuming 4x3
         let hall_window = 12;
         let hall_wall = cal_wall(
           hall_door,
-          total_area_remains_for_hall,
+          hall_size,
           hall_window
         );
          hall_bricks = hall_wall.bricks;
@@ -430,7 +433,7 @@ const material = router.post("/materials", async (req, res) => {
         let total_area_under_roof =
           roomsArea + washroomArea + kitchenArea + total_area_remains_for_hall;
        //=============================================================================//
-       //======================(total material)=======================================//
+       //======================(total material by using M15 for roof material which 1:2:4)=======================================//
         let roof1 = cal_slab_M15(total_area_under_roof);
         let roofCement = roof1.cement_bags
         let roofSand = roof1.sand
@@ -439,14 +442,76 @@ const material = router.post("/materials", async (req, res) => {
         let totalBricks = total_room_bricks+washroom_total_room_bricks+kitchen_total_room_bricks+hall_bricks
         let totalCement = total_room_cements+washroom_total_cements+kitchen_total_room_cements+hall_cement+roofCement
         let totalSand = total_room_sand+washroom_sand+kitchen_sand+hall_sand+roofSand
-        res.status(200).json({
-            total_Bricks:totalBricks,
-            total_Cement:totalCement,
-            total_sand:totalSand,
-            total_concrete_for_slab:roofConcrete,
-            total_steel:steel
+        return res.status(200).json({
+          Total_number_of_bricks:totalBricks,
+          Total_number_of_cement_bags:totalCement,
+          Total_volumn_of_sand:totalSand,
+          Total_kilograms_of_steel:steel,
+          Total_concrete_volumn:roofConcrete
+
         })
-      
+       if(req.body.name!=null||req.body.area!=null){
+        try {
+          console.log("=======================(req body)======================================================")
+          console.log(req.body.name),
+          console.log(req.body.area),
+          console.log(req.body.no_of_roofs),
+          console.log(req.body.rooms),
+          console.log(req.body.avg_room_size),
+          console.log(req.body.attach_bath),
+          console.log(washroomArea),
+          console.log(req.body.kitchen),
+          console.log(kitchenArea),
+          console.log(req.body.u_id),
+          await projects.create({
+            name:req.body.name,
+            area:req.body.area,
+            no_of_roofs:req.body.no_of_roofs,
+            rooms: req.body.rooms,
+            avg_room_size: req.body.avg_room_size,
+            attach_bath:req.body.attach_bath,
+            attach_bath_size:bathroom_size,
+            kitchen:req.body.kitchen,
+            kitchen_size:kitchen_size,
+            u_id:1
+          })
+          return res.status(201).json({m:"succesfull"})
+          // const p =  await projects.findOne({
+          //   where:{
+          //     name:req.body.name
+          //   }
+          // })
+          // try {
+          //   for(let i;i<req.body.no_of_roofs;i++){
+          //     if(p!=null){
+          //       materials.create({
+          //         roof_no:i,
+          //         area:req.body.area,
+          //         rooms: req.body.rooms,
+          //         avg_room_size: req.body.avg_room_size,
+          //         attach_bath:req.body.attach_bath,
+          //         attach_bath_size:req.body.attach_bath_size,
+          //         kitchen:req.body.kitchen,
+          //         kitchen_size:req.body.kitchen_size,
+          //           total_bricks:totalBricks,
+          //           total_cement:totalCement,
+          //           total_beams_pillars:10,
+          //           total_steel:steel,
+          //           total_sand:totalSand,
+          //           total_concrete:roofConcrete,
+          //           p_id:p.id
+          //       })
+          //     }
+          //   }
+          // } catch (error) {
+          //   res.status(500).json({message:"error in the  material database"})
+          // }
+          
+        } catch (error) {
+          res.status(500).json({message:"error in the projects and  material database"})
+        }
+       }
+        
     
   } catch (error) {
     return res.status(500).json(error)

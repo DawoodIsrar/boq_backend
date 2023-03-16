@@ -31,8 +31,15 @@ module.exports = sequelize;
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.users = require("./users.js")(sequelize, Sequelize,DataTypes,QueryTypes);
+db.projects = require('./projects')(sequelize, Sequelize,DataTypes,QueryTypes);
+db.material = require('./material')(sequelize, Sequelize,DataTypes,QueryTypes);
 //user table
-new db.users();
+// db.users.hasMany(db.projects,{
+//   foreignKey: "u_id",
+// })
+// db.projects.hasMany(db.material,{
+//   foreignKey:"p_id"
+// })
 module.exports = db;
 
 

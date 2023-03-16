@@ -16,12 +16,12 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
       allowNull:false
     },
     password: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull:false,
       
     },
     retypePassword:{
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull:true,
     },
   },

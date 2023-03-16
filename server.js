@@ -12,14 +12,14 @@ const logIn = require('./App/routers/login')
 const material = require('./App/routers/materials')
 const secretKey = "cstAttendence";
 const googleAuth = require('./App/routers/oauth')
-
-
+const {swagggerServe,swaggerSetup}= require('./App/config/swagger')
+const projects = require('./App/routers/projects')
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(projects)
 // database
 const db = require("./App/models");
 //database connection
@@ -53,7 +53,7 @@ app.use(session({
 }));
 
 app.get('/', function(req, res) {
-  res.send('hello to google log in');
+  res.send('Welcome to the backend of the BOQ system in');
 });
 
 const port =  8080;
@@ -105,7 +105,7 @@ app.get('/auth/google/callback',
 
  
 
- 
+   app.use("/api-doc",swagggerServe,swaggerSetup)
       
     
  

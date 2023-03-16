@@ -4,7 +4,8 @@
   "description": "BOQ full  backend",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"nodemon server.js"
   },
   "author": "Dawood israr",
   "license": "ISC",
@@ -22,9 +23,14 @@
     "mssql": "^9.1.1",
     "mysql2": "^3.2.0",
     "nodemailer": "^6.9.1",
+    "nodemon": "^2.0.21",
     "passport": "^0.6.0",
     "passport-google-oauth": "^2.0.0",
     "passport-google-oauth20": "^2.0.0",
-    "sequelize": "^6.29.1"
+    "sequelize": "^6.29.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui": "^4.18.1",
+    "swagger-ui-express": "^4.6.2",
+    "yamljs": "^0.3.0"
   }
 }
