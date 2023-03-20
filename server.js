@@ -14,6 +14,7 @@ const secretKey = "cstAttendence";
 const googleAuth = require('./App/routers/oauth')
 const {swagggerServe,swaggerSetup}= require('./App/config/swagger')
 const projects = require('./App/routers/projects')
+const web = require('./App/routers/webscrap')
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 
@@ -106,6 +107,6 @@ app.get('/auth/google/callback',
  
 
    app.use("/api-doc",swagggerServe,swaggerSetup)
-      
+  app.use(web)
     
  

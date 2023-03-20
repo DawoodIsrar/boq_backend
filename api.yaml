@@ -175,7 +175,7 @@ paths:
           description: total Surface area for construction of building.
           schema:
             type: float
-            example: 2050.12
+            example: 2000
         - name: no_of_roofs
           in: path
           required: true
@@ -196,7 +196,7 @@ paths:
           description: The average room size for all the room in the building.
           schema:
             type: float
-            example: 200.50
+            example: 200
         - name: attach_bath
           in: path
           required: true
@@ -210,7 +210,7 @@ paths:
           description: If you want to have attach bathroom with every room and want to give specific bath room size for it By defualt size is 5x6 => 30 feet.
           schema:
             type: flaot
-            example: 30.5
+            example: 30
         - name: kitchen
           in: path
           required: true
@@ -224,7 +224,21 @@ paths:
           description: If you want to have kitchen  with every roof and want to give specific kitchen  size for it By defualt size is 10x20 => 120 feet.
           schema:
             type: flaot
-            example: 130.50
+            example: 130
+        - name: ratio
+          in: path
+          required: true
+          description: Ratio for the roof material in the following M5,M10,M15,M20,M25)
+          schema:
+            type: String
+            example: M15
+        - name: u_id
+          in: path
+          required: true
+          description: User id
+          schema:
+            type: integer
+            example: 1
       post:     
       requestBody:
         required: true
@@ -238,7 +252,7 @@ paths:
                   example: Dawood vella 
                 area: 
                   type: float
-                  example: 2050.50
+                  example: 2000
                 no_of_roofs:
                   type: integer
                   example: 2
@@ -247,20 +261,116 @@ paths:
                   example: 3
                 avg_room_size:
                   type: float
-                  example: 220.50
+                  example: 220
                 attach_bath:
                   type: boolean
                   example: true
                 attach_bath_size:
                   type: float
-                  example: 30.50
+                  example: 30
                 kitchen:
                   type: boolean
                   example: true
                 kitchen_size:
                   type: float
-                  example: 120.540
+                  example: 120
+                ratio:
+                  type: string
+                  example: M15
+                u_id:
+                  type: integer
+                  example: 1
  
+      responses:
+        '500':
+          description: internal server error
+        '200':
+          description: OK
+  /signUp:
+    post:
+      tags:
+       - SignUp
+      summary: Creates a new user.
+      description: sign up for new users through email address and password
+      parameters:
+        - name: username
+          in: path
+          required: true
+          description: The username of the user.
+          schema:
+            type: string
+            example: Dawood
+        - name: email
+          in: path
+          required: true
+          description: The email of the user.
+          schema:
+            type: string
+            example: Dawood@cst.com
+        - name: position
+          in: path
+          required: true
+          description: The position of the user.
+          schema:
+            type: string
+            example: civil engineer
+        - name: password
+          in: path
+          required: true
+          description: The password user enter.
+          schema:
+            type: string
+            example: engineer
+        - name: retypePassword
+          in: path
+          required: true
+          description: The retypePassword user enter for conforming the password given and must be same to passwrod.
+          schema:
+            type: string
+            example: engineer
+      post:     
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Dawood vella 
+                area: 
+                  type: float
+                  example: 2000
+                no_of_roofs:
+                  type: integer
+                  example: 2
+                rooms: 
+                  type: integer
+                  example: 3
+                avg_room_size:
+                  type: float
+                  example: 220
+                attach_bath:
+                  type: boolean
+                  example: true
+                attach_bath_size:
+                  type: float
+                  example: 30
+                kitchen:
+                  type: boolean
+                  example: true
+                kitchen_size:
+                  type: float
+                  example: 120
+                ratio:
+                  type: string
+                  example: M15
+                u_id:
+                  type: integer
+                  example: 1
+
+               
       responses:
         '500':
           description: internal server error

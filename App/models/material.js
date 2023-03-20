@@ -15,7 +15,7 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
       allowNull:false
     },
     avg_room_size: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.FLOAT,
       allowNull:false,
       
     },
@@ -33,30 +33,34 @@ module.exports = (sequelize, Sequelize, DataTypes) => {
       },
       kitchen_size:{
           type: DataTypes.FLOAT,
-          allowNull:true,
+          allowNull:false,
+        },
+        lounge_hall_size:{
+          type: DataTypes.INTEGER,
+          allowNull:false,
         },
       total_bricks:{
-        type: DataTypes.FLOAT,
+        type: DataTypes.INTEGER,
         allowNull:false,
       },
       total_cement:{
-        type: DataTypes.FLOAT,
+        type: DataTypes.INTEGER,
         allowNull:false,
       },
       total_beams_pillars:{
-        type: DataTypes.FLOAT,
+        type: DataTypes.INTEGER,
         allowNull:false,
       },
       total_steel:{
-        type: DataTypes.FLOAT,
+        type: DataTypes.INTEGER,
         allowNull:false,
       },
       total_sand:{
-        type: DataTypes.FLOAT,
+        type: DataTypes.INTEGER,
         allowNull:false,
       },
       total_concrete:{
-        type: DataTypes.FLOAT,
+        type: DataTypes.INTEGER,
         allowNull:false,
       }
       
