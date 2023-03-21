@@ -20,6 +20,7 @@ const material = router.post("/materials", async (req, res) => {
     const no_of_roofs = req.body.no_of_roofs;
     const rooms = req.body.rooms;
     const room_size = req.body.avg_room_size;
+    const piller = req.body.area / 15;
     //calculating ideal washrooom size and hall according to area total
     let bathroom_size;
     let hall_size;
@@ -563,7 +564,7 @@ const material = router.post("/materials", async (req, res) => {
                 lounge_hall_size:hall_size,
                 total_bricks: totalBricks,
                 total_cement: totalCement,
-                total_beams_pillars: 10,
+                total_beams_pillars: piller,
                 total_steel: steel,
                 total_sand: totalSand,
                 total_concrete: roofConcrete,
@@ -578,8 +579,9 @@ const material = router.post("/materials", async (req, res) => {
             Building_total_cement_bags:totalCement,
             Building_total_san_volumn:totalSand,
             Building_total_concrete_volume:roofConcrete,
-            building_total_bemas_pillers:10,
+            building_total_bemas_pillers:piller,
             Building_total_steel:steel,
+          
           });
         } else if (
           req.body.attach_bath === false &&
@@ -620,7 +622,7 @@ const material = router.post("/materials", async (req, res) => {
                 lounge_hall_size:hall_size,
                 total_bricks: totalBricks,
                 total_cement: totalCement,
-                total_beams_pillars: 10,
+                total_beams_pillars: piller,
                 total_steel: steel,
                 total_sand: totalSand,
                 total_concrete: roofConcrete,
@@ -632,7 +634,7 @@ const material = router.post("/materials", async (req, res) => {
               Building_total_cement_bags:totalCement,
               Building_total_san_volumn:totalSand,
               Building_total_concrete_volume:roofConcrete,
-              building_total_bemas_pillers:10,
+              building_total_bemas_pillers:piller,
               Building_total_steel:steel,
             });
           } catch (error) {
@@ -678,7 +680,7 @@ const material = router.post("/materials", async (req, res) => {
                 lounge_hall_size:hall_size,
                 total_bricks: totalBricks,
                 total_cement: totalCement,
-                total_beams_pillars: 10,
+                total_beams_pillars: piller,
                 total_steel: steel,
                 total_sand: totalSand,
                 total_concrete: roofConcrete,
@@ -690,7 +692,7 @@ const material = router.post("/materials", async (req, res) => {
               Building_total_cement_bags:totalCement,
               Building_total_san_volumn:totalSand,
               Building_total_concrete_volume:roofConcrete,
-              building_total_bemas_pillers:10,
+              building_total_bemas_pillers:piller,
               Building_total_steel:steel,
             });
           } catch (error) {
@@ -736,7 +738,7 @@ const material = router.post("/materials", async (req, res) => {
                 lounge_hall_size:hall_size,
                 total_bricks: totalBricks,
                 total_cement: totalCement,
-                total_beams_pillars: 10,
+                total_beams_pillars: piller,
                 total_steel: steel,
                 total_sand: totalSand,
                 total_concrete: roofConcrete,
@@ -748,7 +750,7 @@ const material = router.post("/materials", async (req, res) => {
               Building_total_cement_bags:totalCement,
               Building_total_san_volumn:totalSand,
               Building_total_concrete_volume:roofConcrete,
-              building_total_bemas_pillers:10,
+              building_total_bemas_pillers:piller,
               Building_total_steel:steel,
             });
           } catch (error) {
