@@ -15,7 +15,10 @@ const googleAuth = require('./App/routers/oauth')
 const {swagggerServe,swaggerSetup}= require('./App/config/swagger')
 const projects = require('./App/routers/projects')
 const web = require('./App/routers/webscrap')
+const totalProjects = require('./App/routers/total_projects')
 const updateMaterial = require('./App/routers/updateMaterials')
+const getMaterial = require('./App/routers/porjectMaterial')
+const deleteProject = require('./App/routers/deleteprojects')
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
 
@@ -44,6 +47,9 @@ app.use(logIn)
 app.use(googleAuth)
 app.use(material)
 app.use(updateMaterial)
+app.use(totalProjects)
+app.use(getMaterial)
+app.use(deleteProject)
 //==========================================================
 //============(log in with google)==============================
 const session = require('express-session');
