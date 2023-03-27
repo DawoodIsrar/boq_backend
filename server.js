@@ -19,8 +19,35 @@ const totalProjects = require('./App/routers/total_projects')
 const updateMaterial = require('./App/routers/updateMaterials')
 const getMaterial = require('./App/routers/porjectMaterial')
 const deleteProject = require('./App/routers/deleteprojects')
+
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
+
+//white listing for different host
+// var whitelist = [ 'http://localhost:3000', 'http://localhost:8000']
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   },
+//   credentials: true,           
+//   //  access-control-allow-credentials:true
+//   optionSuccessStatus: 200
+
+// }
+// var whitelist = ['http://localhost:3000', 'http://localhost:8000'];
+// var corsOptions = {
+//   origin: function(origin, callback){
+//     var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+//     console.log("hey from cors option"+originIsWhitelisted)
+//     callback(null, originIsWhitelisted);
+//   }
+// };
+
+// app.use(cors(corsOptions));
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -65,8 +92,6 @@ app.get('/', function(req, res) {
   res.send('Welcome to the backend of the BOQ system in');
 });
 
-const port =  8080;
-app.listen(port , () => console.log('App listening on port ' + port));
 const passport = require('passport');
 var userProfile;
 
