@@ -10,7 +10,6 @@ const mailRouter = require('./App/routers/sendmail')
 const signUp = require('./App/routers/signup')
 const logIn = require('./App/routers/login')
 const material = require('./App/routers/materials')
-const secretKey = "cstAttendence";
 const googleAuth = require('./App/routers/oauth')
 const {swagggerServe,swaggerSetup}= require('./App/config/swagger')
 const projects = require('./App/routers/projects')

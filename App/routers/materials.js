@@ -537,7 +537,7 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
               steel = roof.steel.toFixed();
             } else if (req.body.ratio === "M10" || req.body.ratio === "m10") {
               roof = cal_slab_M10(total_area_under_roof);
-              pillers_beam = cal_slab_M5(total_beams_and_pillers_area)
+              pillers_beam = cal_slab_M10(total_beams_and_pillers_area)
 
               roofCement = roof.cement_bags+pillars_beams.cement_bags;
               roofSand = roof.sand+pillars_beams.sand;
@@ -545,22 +545,23 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
               steel = roof.steel.toFixed();
             } else if (req.body.ratio === "M15" || req.body.ratio === "m15") {
               roof = cal_slab_M15(total_area_under_roof);
-              pillers_beam = cal_slab_M5(total_beams_and_pillers_area)
+              pillers_beam = cal_slab_M15(total_beams_and_pillers_area)
 
               roofCement = roof.cement_bags+pillars_beams.cement_bags;
               roofSand = roof.sand+pillars_beams.sand;
               roofConcrete = roof.concrete.toFixed()+pillars_beams.concrete.toFixed();
               steel = roof.steel.toFixed();
+              console.log("slab materail:",roofCement,roofSand,roofConcrete,steel)
             } else if (req.body.ratio === "M20" || req.body.ratio === "m20") {
               roof = cal_slab_M20(total_area_under_roof);
-              pillers_beam = cal_slab_M5(total_beams_and_pillers_area)
+              pillers_beam = cal_slab_M20(total_beams_and_pillers_area)
 
               roofCement = roof.cement_bags+pillars_beams.cement_bags;
               roofSand = roof.sand+pillars_beams.sand;
               roofConcrete = roof.concrete.toFixed()+pillars_beams.concrete.toFixed();
               steel = roof.steel.toFixed();
             } else if (req.body.ratio === "M25" || req.body.ratio === "m25") {
-              pillers_beam = cal_slab_M5(total_beams_and_pillers_area)
+              pillers_beam = cal_slab_M25(total_beams_and_pillers_area)
 
               roofCement = roof.cement_bags+pillars_beams.cement_bags;
               roofSand = roof.sand+pillars_beams.sand;
@@ -867,7 +868,7 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
                 });
             }
           }
-        } catch (error) {
+        }  catch (error) {
           return res.status(500).json(error);
         }
       } else {
