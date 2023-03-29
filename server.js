@@ -1,10 +1,10 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 const cors = require("cors");
-const jsonwebtoken = require("jsonwebtoken");
+// const jsonwebtoken = require("jsonwebtoken");
 const app = express();
-const config = require("./App/config/auth.config")
+// const config = require("./App/config/auth.config")
 require('dotenv').config();
 const mailRouter = require('./App/routers/sendmail')
 const signUp = require('./App/routers/signup')
@@ -23,20 +23,20 @@ const deleteProject = require('./App/routers/deleteprojects')
 app.use(bodyParser.json());
 
 //white listing for different host
-// var whitelist = [ 'http://localhost:3000', 'http://localhost:8000']
-// var corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   },
-//   credentials: true,           
-//   //  access-control-allow-credentials:true
-//   optionSuccessStatus: 200
+var whitelist = [ 'http://localhost:3000', 'http://localhost:8000']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
+  credentials: true,           
+  //  access-control-allow-credentials:true
+  optionSuccessStatus: 200
 
-// }
+}
 // var whitelist = ['http://localhost:3000', 'http://localhost:8000'];
 // var corsOptions = {
 //   origin: function(origin, callback){
@@ -46,7 +46,7 @@ app.use(bodyParser.json());
 //   }
 // };
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
