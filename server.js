@@ -23,7 +23,7 @@ const deleteProject = require('./App/routers/deleteprojects')
 app.use(bodyParser.json());
 
 //white listing for different host
-var whitelist = [ 'http://localhost:3000', 'http://localhost:8000']
+var whitelist = [ 'http://localhost:3000', 'http://localhost:8000','http://boq@cst.com']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -77,7 +77,7 @@ app.use(totalProjects)
 app.use(getMaterial)
 app.use(deleteProject)
 //==========================================================
-//============(log in with google)==============================
+//============(log in with google)==========================
 const session = require('express-session');
 
 app.set('view engine', 'ejs');
