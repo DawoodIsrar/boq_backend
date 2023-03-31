@@ -523,9 +523,9 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
           let roofSand;
           let roofConcrete;
           let steel;
-        
+          let pillers_beam;
           if (req.body.ratio != null) {
-            let pillers_beam;
+            
             if (req.body.ratio === "M5" || req.body.ratio === "m5") {
               //======================(total material by using M5 for roof material which 1:2:4)=======================================//
               roof = cal_slab_M5(total_area_under_roof);
@@ -589,14 +589,14 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
             hall_sand +
             roofSand
           ).toFixed();
-          // return res.status(200).json({
-          //   Total_number_of_bricks:totalBricks,
-          //   Total_number_of_cement_bags:totalCement,
-          //   Total_volumn_of_sand:totalSand,
-          //   Total_kilograms_of_steel:steel,
-          //   Total_concrete_volumn:roofConcrete
+          return res.status(200).json({
+            Total_number_of_bricks:totalBricks,
+            Total_number_of_cement_bags:totalCement,
+            Total_volumn_of_sand:totalSand,
+            Total_kilograms_of_steel:steel,
+            Total_concrete_volumn:roofConcrete
 
-          // })
+          })
 
           if (exist == null) {
             try {
