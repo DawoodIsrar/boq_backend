@@ -43,7 +43,7 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
           let piller_length;
           let beams;
           let total_beams_and_pillers_area;
-          let no_of_pillars_beams ;
+          let no_of_pillars_beams;
           //calculating ideal washrooom size and hall according to area total
           let bathroom_size;
           let hall_size;
@@ -78,27 +78,35 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
           if (req.body.kitchen != false && req.body.kitchen_size != null) {
             //surface area formula for piller = Surface area = 2lw + 2lh + 2wh
             surface_area_of_piller = 24.75;
-            beams = (4 * (req.body.rooms + 1 + 1)-2);
+            beams = 4 * (req.body.rooms + 1 + 1) - 2;
             beams_size_kitchen = Math.sqrt(req.body.kitchen_size);
             beams_size_hall = Math.sqrt(hall_size);
-            beams_size_room = Math.sqrt(req.body.rooms)
+            beams_size_room = Math.sqrt(req.body.rooms);
 
-            total_beams_area = beams*((2 * (0.75 * 1) + beams_size_kitchen * (0.75 + 1))+(2 * (0.75 * 1) + beams_size_hall * (0.75 + 1))+(2 * (0.75 * 1) + beams_size_room * (0.75 + 1)))
+            total_beams_area =
+              beams *
+              (2 * (0.75 * 1) +
+                beams_size_kitchen * (0.75 + 1) +
+                (2 * (0.75 * 1) + beams_size_hall * (0.75 + 1)) +
+                (2 * (0.75 * 1) + beams_size_room * (0.75 + 1)));
             piller = 4 * (req.body.rooms + 1 + 1) * surface_area_of_piller;
             total_beams_and_pillers_area = piller + total_beams_area;
 
-            no_of_pillars_beams = beams+( 4 * (req.body.rooms + 1 + 1) )
+            no_of_pillars_beams = beams + 4 * (req.body.rooms + 1 + 1);
           } else {
-            piller = 4 * (req.body.rooms + 1)*24.75;
-            beams = (4 * (req.body.rooms + 1 + 1)-2);
+            piller = 4 * (req.body.rooms + 1) * 24.75;
+            beams = 4 * (req.body.rooms + 1 + 1) - 2;
             beams_size_kitchen = Math.sqrt(req.body.kitchen_size);
             beams_size_hall = Math.sqrt(hall_size);
-            beams_size_room = Math.sqrt(req.body.rooms)
-            total_beams_area = beams*((2 * (0.75 * 1) + beams_size_hall * (0.75 + 1))+(2 * (0.75 * 1) + beams_size_room * (0.75 + 1)))
+            beams_size_room = Math.sqrt(req.body.rooms);
+            total_beams_area =
+              beams *
+              (2 * (0.75 * 1) +
+                beams_size_hall * (0.75 + 1) +
+                (2 * (0.75 * 1) + beams_size_room * (0.75 + 1)));
             total_beams_and_pillers_area = piller + total_beams_area;
-            no_of_pillars_beams = beams+( 4 * (req.body.rooms + 1 ) )
+            no_of_pillars_beams = beams + 4 * (req.body.rooms + 1);
           }
-          
 
           //=======================(Step-2)===========================//
           //                 material estimation                      //
@@ -358,7 +366,7 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
             // ratio of concrete sand and concrete 1+2+4 = 7
             let volumeOfConcrete = (2 / 4) * dryVolume;
             console.log("sand volume in cubic feet:" + volumeOfConcrete);
-            //slab iron quntity
+            //slab iron qauntity
             let slab = total_boundry / 35.3147;
             //80kg
             let totalSlab = slab * 80;
@@ -398,11 +406,9 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
               "===================================================================================================="
             );
           } else {
-            return res
-              .status(500)
-              .json({
-                message: "Sorry room no and size of must be mentioned.",
-              });
+            return res.status(500).json({
+              message: "Sorry room no and size of must be mentioned.",
+            });
           }
           //=========================================================================================//
           //now lets calculate the material of bathrooms
@@ -525,47 +531,57 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
           let steel;
           let pillers_beam;
           if (req.body.ratio != null) {
-            
             if (req.body.ratio === "M5" || req.body.ratio === "m5") {
               //======================(total material by using M5 for roof material which 1:2:4)=======================================//
               roof = cal_slab_M5(total_area_under_roof);
-              pillers_beam = cal_slab_M5(total_beams_and_pillers_area)
+              pillers_beam = cal_slab_M5(total_beams_and_pillers_area);
 
-              roofCement = roof.cement_bags+pillars_beams.cement_bags;
-              roofSand = roof.sand+pillars_beams.sand;
-              roofConcrete = roof.concrete.toFixed()+pillars_beams.concrete.toFixed();
+              roofCement = roof.cement_bags + pillars_beams.cement_bags;
+              roofSand = roof.sand + pillars_beams.sand;
+              roofConcrete =
+                roof.concrete.toFixed() + pillars_beams.concrete.toFixed();
               steel = roof.steel.toFixed();
             } else if (req.body.ratio === "M10" || req.body.ratio === "m10") {
               roof = cal_slab_M10(total_area_under_roof);
-              pillers_beam = cal_slab_M10(total_beams_and_pillers_area)
+              pillers_beam = cal_slab_M10(total_beams_and_pillers_area);
 
-              roofCement = roof.cement_bags+pillars_beams.cement_bags;
-              roofSand = roof.sand+pillars_beams.sand;
-              roofConcrete = roof.concrete.toFixed()+pillars_beams.concrete.toFixed();
+              roofCement = roof.cement_bags + pillars_beams.cement_bags;
+              roofSand = roof.sand + pillars_beams.sand;
+              roofConcrete =
+                roof.concrete.toFixed() + pillars_beams.concrete.toFixed();
               steel = roof.steel.toFixed();
             } else if (req.body.ratio === "M15" || req.body.ratio === "m15") {
               roof = cal_slab_M15(total_area_under_roof);
-              pillers_beam = cal_slab_M15(total_beams_and_pillers_area)
+              pillers_beam = cal_slab_M15(total_beams_and_pillers_area);
 
-              roofCement = roof.cement_bags+pillars_beams.cement_bags;
-              roofSand = roof.sand+pillars_beams.sand;
-              roofConcrete = roof.concrete.toFixed()+pillars_beams.concrete.toFixed();
+              roofCement = roof.cement_bags + pillars_beams.cement_bags;
+              roofSand = roof.sand + pillars_beams.sand;
+              roofConcrete =
+                roof.concrete.toFixed() + pillars_beams.concrete.toFixed();
               steel = roof.steel.toFixed();
-              console.log("slab materail:",roofCement,roofSand,roofConcrete,steel)
+              console.log(
+                "slab materail:",
+                roofCement,
+                roofSand,
+                roofConcrete,
+                steel
+              );
             } else if (req.body.ratio === "M20" || req.body.ratio === "m20") {
               roof = cal_slab_M20(total_area_under_roof);
-              pillers_beam = cal_slab_M20(total_beams_and_pillers_area)
+              pillers_beam = cal_slab_M20(total_beams_and_pillers_area);
 
-              roofCement = roof.cement_bags+pillars_beams.cement_bags;
-              roofSand = roof.sand+pillars_beams.sand;
-              roofConcrete = roof.concrete.toFixed()+pillars_beams.concrete.toFixed();
+              roofCement = roof.cement_bags + pillars_beams.cement_bags;
+              roofSand = roof.sand + pillars_beams.sand;
+              roofConcrete =
+                roof.concrete.toFixed() + pillars_beams.concrete.toFixed();
               steel = roof.steel.toFixed();
             } else if (req.body.ratio === "M25" || req.body.ratio === "m25") {
-              pillers_beam = cal_slab_M25(total_beams_and_pillers_area)
+              pillers_beam = cal_slab_M25(total_beams_and_pillers_area);
 
-              roofCement = roof.cement_bags+pillars_beams.cement_bags;
-              roofSand = roof.sand+pillars_beams.sand;
-              roofConcrete = roof.concrete.toFixed()+pillars_beams.concrete.toFixed();
+              roofCement = roof.cement_bags + pillars_beams.cement_bags;
+              roofSand = roof.sand + pillars_beams.sand;
+              roofConcrete =
+                roof.concrete.toFixed() + pillars_beams.concrete.toFixed();
               steel = roof.steel.toFixed();
             }
           }
@@ -590,13 +606,12 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
             roofSand
           ).toFixed();
           return res.status(200).json({
-            Total_number_of_bricks:totalBricks,
-            Total_number_of_cement_bags:totalCement,
-            Total_volumn_of_sand:totalSand,
-            Total_kilograms_of_steel:steel,
-            Total_concrete_volumn:roofConcrete
-
-          })
+            Total_number_of_bricks: totalBricks,
+            Total_number_of_cement_bags: totalCement,
+            Total_volumn_of_sand: totalSand,
+            Total_kilograms_of_steel: steel,
+            Total_concrete_volumn: roofConcrete,
+          });
 
           if (exist == null) {
             try {
@@ -637,7 +652,6 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
                   console.log("project id" + p.id);
 
                   for (let i = 1; i <= req.body.no_of_roofs; i++) {
-                   
                     await materials.create({
                       roof_no: i,
                       area: req.body.area,
@@ -861,14 +875,12 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
                 }
               }
             } catch (error) {
-              return res
-                .status(500)
-                .json({
-                  message: "error in the projects and  material database",
-                });
+              return res.status(500).json({
+                message: "error in the projects and  material database",
+              });
             }
           }
-        }  catch (error) {
+        } catch (error) {
           return res.status(500).json(error);
         }
       } else {

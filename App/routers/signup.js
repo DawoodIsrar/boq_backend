@@ -14,6 +14,7 @@ const signUp = router.post("/signUp", async (req, res) => {
     });
 
     let mail;
+     
     let pass;
     if (exist == null && req.body.password == req.body.retypePassword) {
       try {

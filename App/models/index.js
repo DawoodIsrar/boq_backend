@@ -20,7 +20,6 @@ const sequelize = new Sequelize(
     //   max: config.pool.max,
     //   min: config.pool.min,
     //   acquire: config.pool.acquire,
-    //   idle: config.pool.idle,
       
     // }
   }
