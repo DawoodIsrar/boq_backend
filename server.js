@@ -18,33 +18,30 @@ const totalProjects = require("./App/routers/total_projects");
 const updateMaterial = require("./App/routers/updateMaterials");
 const getMaterial = require("./App/routers/porjectMaterial");
 const deleteProject = require("./App/routers/deleteprojects");
-const path = require('path')
+const path = require("path");
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
-app.use('/', function (req, res) {
+app.use("/", function (req, res) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.sendFile(path.resolve(''))
-})
-const whitelist = ["http://localhost:8000","http://127.0.0.1:5173"];
-
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.sendFile(path.resolve(""));
+});
+const whitelist = ["http://localhost:8000", "http://127.0.0.1:5173"];
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      callback(new Error("Not allowed by CORS"));
     }
   },
 };
-
-
 app.use(cors(corsOptions));
-
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
-
-
 app.use(projects);
 // database
 const db = require("./App/models");
@@ -89,7 +86,7 @@ app.get("/", function (req, res) {
 });
 
 const passport = require("passport");
-const SMTPPool = require("nodemailer/lib/smtp-pool");
+
 var userProfile;
 
 app.use(passport.initialize());
@@ -144,5 +141,3 @@ app.get(
 
 app.use("/api-doc", swagggerServe, swaggerSetup);
 app.use(web);
-
-
