@@ -139,5 +139,5 @@ app.get(
   }
 );
 
-app.use("/api-doc", swagggerServe, swaggerSetup);
-app.use(web);
+// app.use("/api-doc", swagggerServe, swaggerSetup);
+// app.use(web);
