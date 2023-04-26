@@ -524,47 +524,47 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
           let total_area_under_roof =
             roomsArea + washroomArea + kitchenArea + hall_size;
           //=============================================================================//
-          var roof = 0;
-          var roofCement = 0;
-          var roofSand = 0 ;
-          var roofConcrete=0;
-          var steel = 0;
-          var pillers_beam = 0;
+          let roof = 0;
+          let roofCement = 0;
+          let roofSand = 0 ;
+          let roofConcrete=0;
+          let steel = 0;
+          let pillers_beam = 0;
           if (req.body.ratio != null) {
             
             if (req.body.ratio === "M5" || req.body.ratio === "m5") {
               //======================(total material by using M5 for roof material which 1:2:4)=======================================//
               console.log("here in the ratio m5")
-              console.log("===================(now calling for roof )==============================")
+              console.log("===================(now calling for roof)==============================")
 
               roof = cal_slab_M5(total_area_under_roof);
               console.log("bags on roof"+roof.cement_bags)
               console.log("===================(now calling for pillers )==============================")
               pillers_beam = cal_slab_M5(total_beams_and_pillers_area);
              
-              roofCement = roof.cement_bags + pillars_beams.cement_bags;
-              roofSand = roof.sand + pillars_beams.sand;
+              roofCement = roof.cement_bags + pillers_beam.cement_bags;
+              roofSand = roof.sand + pillers_beam.sand;
               roofConcrete =
-                roof.concrete.toFixed() + pillars_beams.concrete.toFixed();
+                roof.concrete.toFixed() + pillers_beam.concrete.toFixed();
               steel = roof.steel.toFixed();
-              console.log("total data"+roofCement)
+             
             } else if (req.body.ratio === "M10" || req.body.ratio === "m10") {
               roof = cal_slab_M10(total_area_under_roof);
               pillers_beam = cal_slab_M10(total_beams_and_pillers_area);
 
-              roofCement = roof.cement_bags + pillars_beams.cement_bags;
-              roofSand = roof.sand + pillars_beams.sand;
+              roofCement = roof.cement_bags + pillers_beam.cement_bags;
+              roofSand = roof.sand + pillers_beam.sand;
               roofConcrete =
-                roof.concrete.toFixed() + pillars_beams.concrete.toFixed();
+                roof.concrete.toFixed() + pillers_beam.concrete.toFixed();
               steel = roof.steel.toFixed();
             } else if (req.body.ratio === "M15" || req.body.ratio === "m15") {
               roof = cal_slab_M15(total_area_under_roof);
               pillers_beam = cal_slab_M15(total_beams_and_pillers_area);
 
-              roofCement = roof.cement_bags + pillars_beams.cement_bags;
-              roofSand = roof.sand + pillars_beams.sand;
+              roofCement = roof.cement_bags + pillers_beam.cement_bags;
+              roofSand = roof.sand + pillers_beam.sand;
               roofConcrete =
-                roof.concrete.toFixed() + pillars_beams.concrete.toFixed();
+                roof.concrete.toFixed() + pillers_beam.concrete.toFixed();
               steel = roof.steel.toFixed();
               console.log(
                 "slab materail:",
@@ -577,41 +577,41 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
               roof = cal_slab_M20(total_area_under_roof);
               pillers_beam = cal_slab_M20(total_beams_and_pillers_area);
 
-              roofCement = roof.cement_bags + pillars_beams.cement_bags;
-              roofSand = roof.sand + pillars_beams.sand;
+              roofCement = roof.cement_bags + pillers_beam.cement_bags;
+              roofSand = roof.sand + pillers_beam.sand;
               roofConcrete =
-                roof.concrete.toFixed() + pillars_beams.concrete.toFixed();
+                roof.concrete.toFixed() + pillers_beam.concrete.toFixed();
               steel = roof.steel.toFixed();
             } else if (req.body.ratio === "M25" || req.body.ratio === "m25") {
               pillers_beam = cal_slab_M25(total_beams_and_pillers_area);
 
-              roofCement = roof.cement_bags + pillars_beams.cement_bags;
-              roofSand = roof.sand + pillars_beams.sand;
+              roofCement = roof.cement_bags + pillers_beam.cement_bags;
+              roofSand = roof.sand + pillers_beam.sand;
               roofConcrete =
-                roof.concrete.toFixed() + pillars_beams.concrete.toFixed();
+                roof.concrete.toFixed() + pillers_beam.concrete.toFixed();
               steel = roof.steel.toFixed();
             }
           }
-          let totalBricks = (
-            total_room_bricks +
+          let totalBricks = ( total_room_bricks +
             washroom_total_room_bricks +
             kitchen_total_room_bricks +
-            hall_bricks
-          ).toFixed();
-          let totalCement = (
-            total_room_cements +
+            hall_bricks).toFixed()
+           
+        ;
+          let totalCement = 
+           ( total_room_cements +
             washroom_total_cements +
             kitchen_total_room_cements +
             hall_cement +
-            roofCement
-          ).toFixed();
-          let totalSand = (
-            total_room_sand +
-            washroom_sand +
-            kitchen_sand +
-            hall_sand +
-            roofSand
-          ).toFixed();
+            roofCement).toFixed()
+          ;
+          let totalSand = 
+            (total_room_sand +
+              washroom_sand +
+              kitchen_sand +
+              hall_sand +
+              roofSand).toFixed();
+          
           console.log("after calling function data")
           console.log(totalBricks,totalCement,totalSand)
           // return res.status(200).json({
