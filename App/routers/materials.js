@@ -280,7 +280,7 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
             let total_boundry = total_surface_area;
             //calculate net volume in cubic feet
             let totalCubicFeets = total_boundry * thickness;
-            console.log("total cubic feet with thickness:" + totalCubicFeets);
+            console.log("total cubic feet with thickness 15:" + totalCubicFeets);
             // dry volumn 56%
 
             let dryVolume = totalCubicFeets * 1.54;
@@ -524,23 +524,30 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
           let total_area_under_roof =
             roomsArea + washroomArea + kitchenArea + hall_size;
           //=============================================================================//
-          let roof;
-          let roofCement;
-          let roofSand;
-          let roofConcrete;
-          let steel;
-          let pillers_beam;
+          var roof = 0;
+          var roofCement = 0;
+          var roofSand = 0 ;
+          var roofConcrete=0;
+          var steel = 0;
+          var pillers_beam = 0;
           if (req.body.ratio != null) {
+            
             if (req.body.ratio === "M5" || req.body.ratio === "m5") {
               //======================(total material by using M5 for roof material which 1:2:4)=======================================//
-              roof = cal_slab_M5(total_area_under_roof);
-              pillers_beam = cal_slab_M5(total_beams_and_pillers_area);
+              console.log("here in the ratio m5")
+              console.log("===================(now calling for roof )==============================")
 
+              roof = cal_slab_M5(total_area_under_roof);
+              console.log("bags on roof"+roof.cement_bags)
+              console.log("===================(now calling for pillers )==============================")
+              pillers_beam = cal_slab_M5(total_beams_and_pillers_area);
+             
               roofCement = roof.cement_bags + pillars_beams.cement_bags;
               roofSand = roof.sand + pillars_beams.sand;
               roofConcrete =
                 roof.concrete.toFixed() + pillars_beams.concrete.toFixed();
               steel = roof.steel.toFixed();
+              console.log("total data"+roofCement)
             } else if (req.body.ratio === "M10" || req.body.ratio === "m10") {
               roof = cal_slab_M10(total_area_under_roof);
               pillers_beam = cal_slab_M10(total_beams_and_pillers_area);
@@ -605,15 +612,18 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
             hall_sand +
             roofSand
           ).toFixed();
-          return res.status(200).json({
-            Total_number_of_bricks: totalBricks,
-            Total_number_of_cement_bags: totalCement,
-            Total_volumn_of_sand: totalSand,
-            Total_kilograms_of_steel: steel,
-            Total_concrete_volumn: roofConcrete,
-          });
+          console.log("after calling function data")
+          console.log(totalBricks,totalCement,totalSand)
+          // return res.status(200).json({
+          //   Total_number_of_bricks: totalBricks,
+          //   Total_number_of_cement_bags: totalCement,
+          //   Total_volumn_of_sand: totalSand,
+          //   Total_kilograms_of_steel: steel,
+          //   Total_concrete_volumn: roofConcrete,
+          // });
 
-          if (exist == null) {
+        
+            console.log("enter to response body")
             try {
               console.log(
                 "=======================(req body)======================================================"
@@ -648,9 +658,9 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
                       name: req.body.name,
                     },
                   });
-                  console.log();
+                  
                   console.log("project id" + p.id);
-
+                  
                   for (let i = 1; i <= req.body.no_of_roofs; i++) {
                     await materials.create({
                       roof_no: i,
@@ -879,9 +889,10 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
                 message: "error in the projects and  material database",
               });
             }
-          }
+          
+        
         } catch (error) {
-          return res.status(500).json(error);
+          return res.status(500).json("errorrrrrrrrrrrrrrrrrrrrrrrrr");
         }
       } else {
         return res
