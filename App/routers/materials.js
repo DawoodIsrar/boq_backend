@@ -541,7 +541,6 @@ const material = router.post("/materials", verifyToken, async (req, res) => {
               console.log("bags on roof"+roof.cement_bags)
               console.log("===================(now calling for pillers )==============================")
               pillers_beam = cal_slab_M5(total_beams_and_pillers_area);
-             
               roofCement = roof.cement_bags + pillers_beam.cement_bags;
               roofSand = roof.sand + pillers_beam.sand;
               roofConcrete =
