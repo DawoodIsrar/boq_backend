@@ -19,7 +19,7 @@ const update = router.patch('/updateMaterials',verifyToken,async(req,res)=>{
         
         const pEx = await projects.findOne({
           where:{
-              name:req.body.name
+              id:req.body.id
           }
       })
     
